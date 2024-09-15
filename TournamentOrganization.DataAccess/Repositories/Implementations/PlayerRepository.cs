@@ -17,5 +17,10 @@ namespace TournamentOrganization.DataAccess.Repositories.Implementations
             var result = await _context.Players.Where(p => playerIds.Contains(p.Id)).ToListAsync();
             return result;
         }
+
+        public async Task<List<Player>> GetPlayersByTournamentIdAsync(int tournamentId)
+        {
+            return await _context.Players.Where(p => p.PlayerTournaments.Any(t => t.TournamentId == tournamentId)).ToListAsync();
+        }
     }
 }

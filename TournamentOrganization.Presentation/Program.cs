@@ -21,9 +21,11 @@ builder.Services.AddTransient<IValidator<TournamentDto>, TournamentDtoValidator>
 //Repositories
 builder.Services.AddScoped<ITournamentRepository, TournamentRepository>();
 builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
+builder.Services.AddScoped<IMatchRepository, MatchRepository>();
 
 //Services
 builder.Services.AddScoped<ITournamentService, TournamentService>();
+builder.Services.AddScoped<ITournamentSimulationService, TournamentSimulationService>();
 
 var app = builder.Build();
 

@@ -14,13 +14,17 @@ namespace TournamentOrganization.BusinessLogic.Services
         private readonly ITournamentRepository _tournamentRepository;
         private readonly IPlayerRepository _playerRepository;
         private readonly IValidator<TournamentDto> _tournamentValidator;
+        private readonly ITournamentSimulationService _tournamentSimulationService;
 
-        public TournamentService(IMapper mapper, ITournamentRepository tournamentRepository, IPlayerRepository playerRepository, IValidator<TournamentDto> tournamentValidator)
+        public TournamentService(IMapper mapper, ITournamentRepository tournamentRepository,
+            IPlayerRepository playerRepository, IValidator<TournamentDto> tournamentValidator,
+            ITournamentSimulationService tournamentSimulationService)
         {
             _mapper = mapper;
             _tournamentRepository = tournamentRepository;
             _playerRepository = playerRepository;
             _tournamentValidator = tournamentValidator;
+            _tournamentSimulationService = tournamentSimulationService;
         }
 
         public async Task<OperationResult<string>> CreateTournament(TournamentDto tournamentDto)
@@ -40,13 +44,15 @@ namespace TournamentOrganization.BusinessLogic.Services
                     return CreateErrorResponse("The participants are not all of the same gender.");
                 }
 
-                var entity = _mapper.Map<Tournament>(tournamentDto);
-                await _tournamentRepository.AddAsync(entity);
+                var tournament = _mapper.Map<Tournament>(tournamentDto);
+                await _tournamentRepository.AddAsync(tournament);
+
+                var winner = await _tournamentSimulationService.SimulateTournamentAsync(tournament.Id);
 
                 var result = new OperationResult<string>()
                 {
                     Success = true,
-                    Data = $"TournamentId = {entity.Id}"
+                    Data = $"The champion of the tournament is: {winner.FirstName} {winner.LastName}."
                 };
 
                 return result;
