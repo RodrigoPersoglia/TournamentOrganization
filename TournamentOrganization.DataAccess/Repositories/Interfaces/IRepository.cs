@@ -1,7 +1,10 @@
-﻿namespace TournamentOrganization.DataAccess.Repositories.Interfaces
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace TournamentOrganization.DataAccess.Repositories.Interfaces
 {
     public interface IRepository<T> where T : class
     {
+        IQueryable<T> GetAllAsQueryable();
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetByIdAsync(int id);
         Task AddAsync(T entity);

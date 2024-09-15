@@ -64,18 +64,19 @@ namespace TournamentOrganization.BusinessLogic.Services
 
         private double CalculateScore(Player player)
         {
-            var randomFactor = new Random().NextDouble() * 0.25 * player.SkillLevel;
+            double randomNumber = new Random().Next(0, 51);
+            var luckFactor = randomNumber /100 * player.SkillLevel;
             if (player.Gender == "Male")
             {
                 int strength = player.Strength ?? 0;
                 int speed = player.Speed ?? 0;
-                double score = player.SkillLevel + strength * speed + randomFactor;
+                double score = player.SkillLevel + strength * (speed + luckFactor)/2;
                 return score;
             }
             else
             {
                 int reactionTime = player.ReactionTime ?? 0;
-                double score = player.SkillLevel + reactionTime + randomFactor;
+                double score = player.SkillLevel + reactionTime + luckFactor;
                 return score;
             }
         }
