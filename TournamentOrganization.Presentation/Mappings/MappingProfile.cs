@@ -18,5 +18,7 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.Player1, opt => opt.MapFrom(src => $"{src.Player1.FirstName} {src.Player1.LastName}"))
             .ForMember(dest => dest.Player2, opt => opt.MapFrom(src => $"{src.Player2.FirstName} {src.Player2.LastName}"))
             .ForMember(dest => dest.Winner, opt => opt.MapFrom(src => $"{src.Winner.FirstName} {src.Winner.LastName}"));
+
+        CreateMap<Player, PlayerDto>().ReverseMap();
     }
 }

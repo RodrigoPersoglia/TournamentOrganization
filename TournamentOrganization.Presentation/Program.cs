@@ -25,6 +25,7 @@ builder.Services.AddScoped<IMatchRepository, MatchRepository>();
 //Services
 builder.Services.AddScoped<ITournamentService, TournamentService>();
 builder.Services.AddScoped<ITournamentSimulationService, TournamentSimulationService>();
+builder.Services.AddScoped<IPlayerService, PlayerService>();
 
 var app = builder.Build();
 

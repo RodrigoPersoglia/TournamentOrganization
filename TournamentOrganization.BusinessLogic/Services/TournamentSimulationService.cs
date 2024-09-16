@@ -23,6 +23,7 @@ namespace TournamentOrganization.BusinessLogic.Services
             List<Player> winners = new List<Player>();
 
             int roundMatches = players.Count / 2;
+            DateTime nextMatchTime = DateTime.Today.AddHours(10);
             while (players.Count > 1)
             {
                 for (int i = 0; i < roundMatches; i++)
@@ -39,9 +40,11 @@ namespace TournamentOrganization.BusinessLogic.Services
                         Player2Id = player2.Id,
                         WinnerId = winner.Id,
                         TournamentId = tournamentId,
-                        Date = DateTime.Now,
+                        Date = nextMatchTime,
                         Stage = DetermineStage(players.Count)
                     });
+
+                    nextMatchTime = nextMatchTime.AddHours(1);
                 }
 
                 players = winners;
