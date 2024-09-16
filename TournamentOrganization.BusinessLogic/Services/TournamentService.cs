@@ -83,15 +83,15 @@ namespace TournamentOrganization.BusinessLogic.Services
             }
 
             var query = _matchRepository.GetAllAsQueryable();
-                query = query.Where(t =>
-                (!TournamentId.HasValue || t.TournamentId == TournamentId) &&
-                (string.IsNullOrEmpty(TournamentName) || t.Tournament.Name == TournamentName) &&
-                (!date.HasValue || t.Tournament.StartDate.Date == date.Value.Date) &&
-                (string.IsNullOrEmpty(gender) || t.Tournament.PlayerGender == gender) &&
-                (string.IsNullOrEmpty(stage) || t.Stage == stage))
-                .Include(m => m.Player1)
-                .Include(m => m.Player2)
-                .Include(m => m.Winner);
+            query = query.Where(t =>
+            (!TournamentId.HasValue || t.TournamentId == TournamentId) &&
+            (string.IsNullOrEmpty(TournamentName) || t.Tournament.Name == TournamentName) &&
+            (!date.HasValue || t.Tournament.StartDate.Date == date.Value.Date) &&
+            (string.IsNullOrEmpty(gender) || t.Tournament.PlayerGender == gender) &&
+            (string.IsNullOrEmpty(stage) || t.Stage == stage))
+            .Include(m => m.Player1)
+            .Include(m => m.Player2)
+            .Include(m => m.Winner);
 
             var matches = await query.ToListAsync();
 

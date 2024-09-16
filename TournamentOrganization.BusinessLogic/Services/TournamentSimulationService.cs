@@ -53,6 +53,7 @@ namespace TournamentOrganization.BusinessLogic.Services
             return players.First();
         }
 
+        #region Private Methods
         private Player SimulateMatch(Player player1, Player player2, int tournamentId)
         {
             double score1 = CalculateScore(player1);
@@ -65,12 +66,12 @@ namespace TournamentOrganization.BusinessLogic.Services
         private double CalculateScore(Player player)
         {
             double randomNumber = new Random().Next(0, 51);
-            var luckFactor = randomNumber /100 * player.SkillLevel;
+            var luckFactor = randomNumber / 100 * player.SkillLevel;
             if (player.Gender == "Male")
             {
                 int strength = player.Strength ?? 0;
                 int speed = player.Speed ?? 0;
-                double score = player.SkillLevel + strength * (speed + luckFactor)/2;
+                double score = player.SkillLevel + strength * (speed + luckFactor) / 2;
                 return score;
             }
             else
@@ -91,6 +92,7 @@ namespace TournamentOrganization.BusinessLogic.Services
                 default: return $"Round of {remainingPlayers}";
             }
         }
+        #endregion
 
     }
 
